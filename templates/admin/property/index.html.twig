@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-4">
+		<h1>Hello admin
+		</h1>
+
+		{% for msg in app.flashes('success') %}
+			<div class="alert alert-success">{{msg}}</div>
+		{% endfor %}
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for prop in properties %}
+					<tr>
+						<td>{{prop.title}}</td>
+						<td>
+							<div class="row">
+								<a href="{{path('admin.property.edit', {id: prop.id})}}" class="mr-2 btn btn-primary">Edit</a>
+
+								<form method="post" action="{{path('admin.property.delete', {id: prop.id})}}" onsubmit="return confirm('Are you sure ?')">
+									<input type="hidden" name="_method" value="DELETE">
+									<input type="hidden" name="_token" value="{{csrf_token('delete' ~ prop.id) }}">
+									<button class="btn btn-danger">Delete</button>
+								</form>
+							</div>
+						</td>
+					</tr>
+				</td>
+			</tbody>
+		</tr>
+	{% endfor %}
+</tbody></table><div class="text-right">
+<a href="{{path('admin.property.create')}}" class="btn btn-info">Create</a></div></div>{% endblock %}
