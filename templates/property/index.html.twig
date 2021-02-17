@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Properties
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>Properties</h1>
+		<hr>
+		<div class="row flex justify-content-around">
+			{% for prop in properties %}
+				<div class="shadow">
+					<h2 class="bg-dark py-2 px-3 text-white text-center">{{prop.title}}</h2>
+					<div class="body p-3">
+						<span>{{prop.city}}
+							({{prop.postalcode}})</span>
+						<p class="text-secondary">
+							{{prop.description}}
+						</p>
+						<span class="text-primary">{{ prop.formattedPrice }}
+							$</span>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}
