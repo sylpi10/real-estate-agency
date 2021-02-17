@@ -11,12 +11,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class PropertyController extends AbstractController
 {
+    private $repo;
+    public function __construct(PropertyRepository $repo)
+    {
+        $this->repo = $repo;
+    }
     /**
      * @Route("/property", name="property")
      * @param PropertyRepository $repo
      * @return Response
      */
-    public function index(PropertyRepository $repo): Response
+    public function index(): Response
     {
         $property = new Property();
         $property->setTitle("third home")
@@ -33,11 +38,30 @@ class PropertyController extends AbstractController
         // $manager->persist($property);
         // $manager->flush();
 
-        $properties = $repo->findAllAvailable();
+        $properties = $this->repo->findAllAvailable();
         return $this->render('property/index.html.twig', [
-            'controller_name' => 'PropertyController',
             'current_menu' => 'properties',
             'properties' => $properties
+        ]);
+    }
+
+    /**
+     * @Route("/property/{slug}-{id}", name="details", requirements={"slug": "[a-z0-9\-]*"})
+     * @param PropertyRepository $repo
+     * @return Response
+     */
+    public function detail(Property $property, string $slug): Response
+    {
+        // $property = $this->repo->find($id);
+        if ($property->getSlug() !== $slug) {
+            return $this->redirectToRoute('details', [
+                'id' => $property->getId(),
+                'slug' => $property->getSlug()
+            ], 301);
+        }
+        return $this->render('property/details.html.twig', [
+            'current_menu' => 'properties',
+            'property' => $property
         ]);
     }
 }

@@ -11,15 +11,17 @@
 			{% for prop in properties %}
 				<div class="shadow">
 					<h2 class="bg-dark py-2 px-3 text-white text-center">{{prop.title}}</h2>
-					<div class="body p-3">
-						<span>{{prop.city}}
-							({{prop.postalcode}})</span>
-						<p class="text-secondary">
-							{{prop.description}}
-						</p>
-						<span class="text-primary">{{ prop.formattedPrice }}
-							$</span>
-					</div>
+					<a href="{{ path('details', {id: prop.id, slug: prop.slug}) }}">
+						<div class="body p-3">
+							<span class="text-dark">{{prop.city}}
+								({{prop.postalcode}})</span>
+							<p class="text-secondary">
+								{{prop.description}}
+							</p>
+							<span class="text-primary">{{ prop.formattedPrice }}
+								$</span>
+						</div>
+					</a>
 				</div>
 			{% endfor %}
 		</div>

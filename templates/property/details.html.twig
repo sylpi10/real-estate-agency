@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Properties
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<h1>
+			{{property.title}}</h1>
+		<hr>
+
+		<div class="p-3">
+			<h2>{{property.rooms}}
+				rooms,
+				{{property.surface}}
+				m²</h2>
+			<span class="text-dark">{{property.city}}
+				({{property.postalcode}})</span>
+
+			<h3 class="text-primary">{{ property.formattedPrice }}
+				$</h3>
+			<a href="#" class="btn btn-info">Contact agency</a>
+		</div>
+		<hr>
+		<nav class="nav navbar" id="tab"></nav>
+
+		<p>
+			{{property.description | nl2br }}
+		</p>
+
+		<div class="row">
+			<div class="col-md-8">
+				<h2>Caracteritics</h2>
+				<table class="table table-striped">
+					<tr>
+						<td>Surface</td>
+						<td>{{property.surface}}
+							m²</td>
+					</tr>
+					<tr>
+						<td>Rooms</td>
+						<td>{{property.rooms}}</td>
+					</tr>
+					<tr>
+						<td>Bedrooms</td>
+						<td>{{property.bedrooms}}</td>
+					</tr>
+					<tr>
+						<td>Heat</td>
+						{# <td>{{property.heatType}}</td> #}
+						<td>{{property.heat}}</td>
+					</tr>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>{% endblock %}
