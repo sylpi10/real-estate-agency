@@ -12,29 +12,24 @@
 			<div class="alert alert-success">{{msg}}</div>
 		{% endfor %}
 
-		<div class="text-right">
-			<a href="{{path('admin.property.create')}}" class="btn btn-info">Create</a>
-			<a href="{{path('admin.option.index')}}" class="btn btn-primary">Options</a>
-		</div>
-
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th>Title</th>
+					<th>Name</th>
 					<th>Action</th>
 				</tr>
 			</thead>
 			<tbody>
-				{% for prop in properties %}
+				{% for option in options %}
 					<tr>
-						<td>{{prop.title}}</td>
+						<td>{{option.name}}</td>
 						<td>
 							<div class="row">
-								<a href="{{path('admin.property.edit', {id: prop.id})}}" class="mr-2 btn btn-primary">Edit</a>
+								<a href="{{path('admin.option.edit', {id: option.id})}}" class="mr-2 btn btn-primary">Edit</a>
 
-								<form method="post" action="{{path('admin.property.delete', {id: prop.id})}}" onsubmit="return confirm('Are you sure ?')">
+								<form method="post" action="{{path('admin.option.delete', {id: option.id})}}" onsubmit="return confirm('Are you sure ?')">
 									<input type="hidden" name="_method" value="DELETE">
-									<input type="hidden" name="_token" value="{{csrf_token('delete' ~ prop.id) }}">
+									<input type="hidden" name="_token" value="{{csrf_token('delete' ~ option.id) }}">
 									<button class="btn btn-danger">Delete</button>
 								</form>
 							</div>
@@ -44,5 +39,7 @@
 			{% endfor %}
 		</tbody>
 	</table>
-
+	<div class="">
+		<a href="{{path('admin.option.create')}}" class="btn btn-info">Create</a>
+	</div>
 </div>{% endblock %}
