@@ -7,7 +7,7 @@
 			{% endblock %}
 		</title>
 		{# Run `composer require symfony/webpack-encore-bundle`
-																																																																						           and uncomment the following Encore helpers to start using Symfony UX #}
+																																																																																		           and uncomment the following Encore helpers to start using Symfony UX #}
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 		{% block stylesheets %}
 			{#{{ encore_entry_link_tags('app') }}#}
@@ -39,7 +39,9 @@
 						<a class="nav-link {% if current_menu is defined and current_menu == 'properties'  %} active {% endif %}" href="{{path('property')}}">Properties</a>
 					</li>
 				</ul>
-
+				{% if app.user %}
+					<a href="{{path('logout')}}" class="text-white bg-danger px-4">Logout</a>
+				{% endif %}
 			</div>
 		</nav>
 		{% block body %}{% endblock %}
