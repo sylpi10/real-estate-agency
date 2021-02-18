@@ -2,9 +2,13 @@
 
 namespace App\Repository;
 
+use Doctrine\ORM\Query;
 use App\Entity\Property;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\PropertySearch;
+use Doctrine\ORM\QueryBuilder;
+use App\Form\PropertySearchType;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @method Property|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,15 +23,41 @@ class PropertyRepository extends ServiceEntityRepository
         parent::__construct($registry, Property::class);
     }
 
-    /*
-     * @return Property[]
+    /**
+     * @return Query
      */
-    public function findAllAvailable(): array
+    public function findProperties(PropertySearch $search): Query
+    {
+        $query = $this->findAvailable();
+
+        if ($search->getMaxPrice()) {
+            $query = $query
+                ->andWhere('p.price <= :maxPrice')
+                ->setParameter('maxPrice', $search->getMaxPrice());
+        }
+        if ($search->getMinSurface()) {
+            $query = $query
+                ->andWhere('p.surface >= :minSurface')
+                ->setParameter('minSurface', $search->getMinSurface());
+        }
+        return $query->getQuery();
+    }
+
+    public function findLatest()
     {
         return $this->createQueryBuilder('p')
             ->where('p.sold = false')
+            ->setMaxResults(6)
             ->getQuery()
             ->getResult();
+    }
+
+    /*
+     */
+    public function findAvailable(): QueryBuilder
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.sold = false');
     }
 
     // /**

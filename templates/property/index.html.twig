@@ -7,23 +7,29 @@
 	<div class="container">
 		<h1>Properties</h1>
 		<hr>
+		<div class="jumbotron">
+			{{form_start(form)}}
+			<div class="form-row">
+				<div class="col">
+					{{form_row(form.minSurface)}}
+				</div>
+				<div class="col">
+					{{form_row(form.maxPrice)}}
+				</div>
+				<div class="col">
+					<button class="btn btn-info">Filter</button>
+				</div>
+			</div>
+			{{form_end(form)}}
+		</div>
 		<div class="row flex justify-content-around">
 			{% for prop in properties %}
-				<div class="shadow">
-					<h2 class="bg-dark py-2 px-3 text-white text-center">{{prop.title}}</h2>
-					<a href="{{ path('details', {id: prop.id, slug: prop.slug}) }}">
-						<div class="body p-3">
-							<span class="text-dark">{{prop.city}}
-								({{prop.postalcode}})</span>
-							<p class="text-secondary">
-								{{prop.description}}
-							</p>
-							<span class="text-primary">{{ prop.formattedPrice }}
-								$</span>
-						</div>
-					</a>
-				</div>
+				{% include "property/_property.html.twig" %}
 			{% endfor %}
+		</div>
+
+		<div class="navigation m-auto w-50">
+			{{ knp_pagination_render(properties) }}
 		</div>
 	</div>
 {% endblock %}
