@@ -1,6 +1,13 @@
 <div class="border col-lg-3 col-md-4 col-sm-12 m-3 p-0 rounded-top">
-	<h2 class="bg-info py-3 px-3 text-white text-center rounded-top">{{prop.title}}</h2>
 	<a href="{{ path('details', {id: prop.id, slug: prop.slug}) }}">
+
+		<h2 class="bg-info py-3 px-3 text-white text-center rounded-top">{{prop.title}}</h2>
+		{% if prop.filename %}
+			{# <img src="/images/properties/{{prop.filename}}" alt="" width="300" class="card-img-top"> #}
+			<img src="{{ vich_uploader_asset(prop, 'imageFile') | imagine_filter('thumb')}}" alt="" class="card-img-top">
+		{% else %}
+			<img src="{{'/images/properties/homestead.png'| imagine_filter('thumb')}}" alt="house" class="card-img-top">
+		{% endif %}
 		<div class="body p-3">
 			<span class="text-dark">{{prop.city}}
 				({{prop.postalcode}})</span>

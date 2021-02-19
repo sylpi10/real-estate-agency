@@ -73,6 +73,10 @@ class AdminPropertyController extends AbstractController
         // $option = new Option();
         // $property->addOption($option);
 
+        // if ($property->getImageFile() instanceof UploadedFile) {
+        //     $cacheManager->remove($helper->asset($property, 'imageFile'));
+        // }
+
         $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {

@@ -9,24 +9,36 @@
 			{{property.title}}</h1>
 		<hr>
 
-		<div class="p-3">
-			<h2>{{property.rooms}}
-				rooms,
-				{{property.surface}}
-				m²</h2>
-			<span class="text-dark">{{property.city}}
-				({{property.postalcode}})</span>
+		<div class="row">
+			<div class="col-5">
+				{% if property.filename %}
+					{# <img src="/images/properties/{{prop.filename}}" alt="" width="300" class="card-img-top"> #}
+					<img src="{{ vich_uploader_asset(property, 'imageFile') | imagine_filter('medium')}}" alt="" class="card-img-top">
+				{% else %}
+					<img src="{{'/images/properties/homestead.png'| imagine_filter('thumb')}}" alt="medium" class="card-img-top">
+				{% endif %}
+			</div>
+			<div class="col-7">
+				<div class="p-3">
+					<h2>{{property.rooms}}
+						rooms,
+						{{property.surface}}
+						m²</h2>
+					<span class="text-dark">{{property.city}}
+						({{property.postalcode}})</span>
 
-			<h3 class="text-primary">{{ property.formattedPrice }}
-				$</h3>
-			<a href="#" class="btn btn-info">Contact agency</a>
+					<h3 class="text-primary">{{ property.formattedPrice }}
+						$</h3>
+					<a href="#" class="btn btn-info">Contact agency</a>
+				</div>
+			</div>
 		</div>
-		<hr>
 		<nav class="nav navbar" id="tab"></nav>
 
-		<p>
+		<p class="w-50">
 			{{property.description | nl2br }}
 		</p>
+		<hr>
 
 		<div class="row">
 			<div class="col-md-8">
@@ -49,8 +61,16 @@
 						<td>Heat</td>
 						<td>{{property.heatType}}</td>
 					</tr>
-				</tr>
-			</table>
+				</table>
+			</div>
+			<div class="col-md-4">
+				<h2>Specifics</h2>
+				<ul class="list-group">
+					{% for option in property.options %}
+						<li class="list-group-item">{{option.name}}</li>
+					{% endfor %}
+				</ul>
+			</div>
 		</div>
 	</div>
-</div>{% endblock %}
+{% endblock %}
