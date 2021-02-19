@@ -8,6 +8,15 @@
 		<h1>
 			{{property.title}}</h1>
 		<hr>
+		{% for msg in app.flashes('success') %}
+			<div class="alert alert-success">{{msg}}</div>
+		{% endfor %}
+
+		{% if not form.vars.valid %}
+			<div class="alert alert-danger">
+				<p>Errors in some fields</p>
+			</div>
+		{% endif %}
 
 		<div class="row">
 			<div class="col-5">
@@ -30,6 +39,12 @@
 					<h3 class="text-primary">{{ property.formattedPrice }}
 						$</h3>
 					<a href="#" class="btn btn-info">Contact agency</a>
+					<div class="mt-4" id="contactForm">
+						{{form_start(form)}}
+						{{form_widget(form)}}
+						<button type="submit">Send</button>
+						{{form_end(form)}}
+					</div>
 				</div>
 			</div>
 		</div>
